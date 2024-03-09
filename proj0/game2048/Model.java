@@ -109,10 +109,51 @@ public class Model extends Observable {
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
-
+        //Side opposite_side = Side.opposite(side);
+        this.board.setViewingPerspective(side);
         // TODO: Modify this.board (and perhaps this.score) to account
+        if (!atLeastOneMoveExists(this.board)){
+            return false;
+        }
+        for(int col = 0; col < this.board.size(); col += 1){
+            int merged_row = -1;
+            for(int row = this.board.size() - 2; row >= 0; row -= 1){
+                if(this.board.tile(col, row) == null) {
+                    continue;
+                }
+                int move_row;
+                for(move_row = this.board.size() - 1; move_row > row; move_row -= 1){
+                    if(move_row - 1 == row || this.board.tile(col,move_row-1) == null){
+                        break;
+                    }
+                }
+                if(this.board.tile(col, move_row) == null){
+                    this.board.move(col, move_row, this.board.tile(col, row));
+                    changed = true;
+                }
+                else if(this.board.tile(col, move_row).value() != this.board.tile(col, row).value()){
+                    if(move_row - 1 != row){
+                        this.board.move(col, move_row-1, this.board.tile(col, row));
+                        changed = true;
+                    }
+                }
+                else{
+                    if(move_row == merged_row){
+                        this.board.move(col, move_row-1, this.board.tile(col, row));
+                        changed = true;
+                    }
+                    else{
+                        this.board.move(col, move_row, this.board.tile(col, row));
+                        this.score += this.board.tile(col, move_row).value();
+                        changed = true;
+                        merged_row = move_row;
+                    }
+                }
+            }
+        }
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        this.board.setViewingPerspective(Side.NORTH);
 
         checkGameOver();
         if (changed) {
@@ -153,7 +194,30 @@ public class Model extends Observable {
      * given a Tile object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
-        // TODO: Fill in this function.
+        for(int i = 0; i < b.size(); i += 1){
+            for(int j = 0; j < b.size(); j += 1){
+                if(b.tile(i, j) == null){
+                    continue;
+                }
+                else if(b.tile(i, j).value() == Model.MAX_PIECE){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    /** Returns true if there are any valid up moves on the board. */
+    public static boolean atLeastOneMoveExistsUp(Board b){
+        if(emptySpaceExists(b)){
+            return true;
+        }
+        for(int i = 1; i < b.size(); i += 1){
+            for(int j = 0; j < b.size(); j += 1){
+                if(b.tile(j, i).value() == b.tile(j, i-1).value()){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -164,7 +228,24 @@ public class Model extends Observable {
      * 2. There are two adjacent tiles with the same value.
      */
     public static boolean atLeastOneMoveExists(Board b) {
-        // TODO: Fill in this function.
+        if(atLeastOneMoveExistsUp(b)){
+            return true;
+        }
+        b.setViewingPerspective(Side.WEST);
+        if(atLeastOneMoveExistsUp(b)){
+            b.setViewingPerspective(Side.NORTH);
+            return true;
+        }
+        b.setViewingPerspective(Side.EAST);
+        if(atLeastOneMoveExistsUp(b)){
+            b.setViewingPerspective(Side.NORTH);
+            return true;
+        }
+        b.setViewingPerspective(Side.SOUTH);
+        if(atLeastOneMoveExistsUp(b)){
+            b.setViewingPerspective(Side.NORTH);
+            return true;
+        }
         return false;
     }
 
