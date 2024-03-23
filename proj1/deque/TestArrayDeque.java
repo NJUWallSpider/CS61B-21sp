@@ -79,13 +79,13 @@ public class TestArrayDeque {
             lld4.addLast(i);
         }
         lld4.printDeque();
-        int actual1 = lld4.get(0);
-        assertEquals(0, actual1);
-        int actual2 = lld4.get(8);
-        assertEquals(7, actual2);
-        for(int i = 0; i < 5; i += 1){
-            lld4.removeLast();
+        for(int i = 0; i < 10; i += 1){
+            lld4.removeFirst();
         }
+        for(int i = 0; i < 10; i += 1){
+            lld4.addLast(i);
+        }
+        lld4.printDeque();
         int actual3 = lld4.get(0);
         assertEquals(0, actual3);
     }
