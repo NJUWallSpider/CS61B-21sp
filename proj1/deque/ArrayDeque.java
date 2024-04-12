@@ -1,9 +1,9 @@
 package deque;
 
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T>{
     private T[] items;
     private int size;
-    public int front, back, original;
+    private int front, back, original;
 
     public ArrayDeque() {
         items = (T[]) new Object[8];
@@ -16,7 +16,7 @@ public class ArrayDeque<T> {
     /**
      * convert the relative distance from the origin to the absolute index, mode 1 for front, 2 for back
      */
-    public int Indexconvert(int mode, int distance) {
+    private int Indexconvert(int mode, int distance) {
         if (mode == 1) {
             int max_room = items.length - original - 1; // remaining room for front
             if (distance <= max_room) {
@@ -57,7 +57,7 @@ public class ArrayDeque<T> {
         original = new_original;
         items = a;
     }
-
+    @Override
     public void addFirst(T x) {
         if (size >= items.length - 1) {
             resize(items.length * 2);
@@ -66,11 +66,11 @@ public class ArrayDeque<T> {
         items[Indexconvert(1, front)] = x;
         size += 1;
     }
-
+    @Override
     public int size() {
         return size;
     }
-
+    @Override
     public void addLast(T x) {
         if (size >= items.length - 1) {
             resize(items.length * 2);
@@ -79,11 +79,7 @@ public class ArrayDeque<T> {
         items[Indexconvert(2, back)] = x;
         size += 1;
     }
-
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
+    @Override
     public void printDeque() {
         if (isEmpty()) {
             System.out.println("Empty deque");
@@ -103,7 +99,7 @@ public class ArrayDeque<T> {
             System.out.print("\n");
         }
     }
-
+    @Override
     public T removeFirst() {
         if (size == 0) {
             return null;
@@ -130,7 +126,7 @@ public class ArrayDeque<T> {
         size -= 1;
         return returned;
     }
-
+    @Override
     public T removeLast() {
         if (size == 0) {
             return null;
@@ -157,7 +153,7 @@ public class ArrayDeque<T> {
         size -= 1;
         return returned;
     }
-
+    @Override
     public T get(int index) {
         if (index + 1 <= front) {
             return items[Indexconvert(1, front - index)];

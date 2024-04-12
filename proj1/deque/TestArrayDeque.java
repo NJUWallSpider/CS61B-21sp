@@ -42,8 +42,8 @@ public class TestArrayDeque {
         for(int i = 5; i <= 9; i+=1){
             lld2.addLast(i);
         }
-        Assert.assertEquals(lld2.front, 5);
-        Assert.assertEquals(lld2.back, 5);
+//        Assert.assertEquals(lld2.front, 5);
+//        Assert.assertEquals(lld2.back, 5);
         lld2.printDeque();
         for(int i = 0; i < 5; i+=1){
             lld2.removeFirst();
