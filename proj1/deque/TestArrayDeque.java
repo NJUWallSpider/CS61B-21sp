@@ -6,8 +6,7 @@ import org.junit.Assert.*;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TestArrayDeque {
     /** test add and remove when front and back are both positive, and no resize */
@@ -102,5 +101,24 @@ public class TestArrayDeque {
         }
         assertEquals(sum, 42);
     }
+    @Test
+    public void testEqual(){
+        ArrayDeque<Integer> lld6 = null;
+        ArrayDeque<Integer> lld7 = new ArrayDeque<>();
+        ArrayDeque<Double> lld8 = new ArrayDeque<>();
+        ArrayDeque<Integer> lld9 = new ArrayDeque<>();
+        ArrayDeque<Integer> lld10 = new ArrayDeque<>();
+        for (int i = 0; i < 10; i += 1){
+            lld7.addFirst(i);
+            lld9.addFirst(i);
+            lld10.addLast(i);
+            lld8.addFirst((double) i);
+        }
+        assertEquals(lld7, lld9);
+        assertNotEquals(lld7, lld8);
+        assertNotEquals(lld7, lld6);
+        assertNotEquals(lld7, lld10);
+    }
+
 
 }

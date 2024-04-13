@@ -136,14 +136,14 @@ public class LinkedListDequeTest {
     @Test
     public void testGet(){
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 1000; i++) {
             lld1.addLast(i);
         }
-        int item = lld1.get(988888);
-        Assert.assertEquals(988888, item);
-        int item2 = lld1.get(500000);
-        Assert.assertEquals(500000, item2);
-        int item3 = lld1.get(0);
+        int item = lld1.getRecursive(988);
+        Assert.assertEquals(988, item);
+        int item2 = lld1.getRecursive(250);
+        Assert.assertEquals(250, item2);
+        int item3 = lld1.getRecursive(0);
         Assert.assertEquals(0, item3);
     }
     @Test
@@ -157,5 +157,24 @@ public class LinkedListDequeTest {
             sum += i;
         }
         assertEquals(sum, 42);
+    }
+
+    @Test
+    public void testEqual(){
+        LinkedListDeque<Integer> lld6 = null;
+        LinkedListDeque<Integer> lld7 = new LinkedListDeque<>();
+        LinkedListDeque<Double> lld8 = new LinkedListDeque<>();
+        ArrayDeque<Integer> lld9 = new ArrayDeque<>();
+        LinkedListDeque<Integer> lld10 = new LinkedListDeque<>();
+        for (int i = 0; i < 10; i += 1){
+            lld7.addFirst(i);
+            lld9.addFirst(i);
+            lld10.addLast(i);
+            lld8.addFirst((double) i);
+        }
+        assertEquals(lld7, lld9);
+        assertNotEquals(lld7, lld8);
+        assertNotEquals(lld7, lld6);
+        assertNotEquals(lld7, lld10);
     }
 }

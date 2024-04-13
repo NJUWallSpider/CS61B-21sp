@@ -3,7 +3,7 @@ package deque;
 import java.util.Iterator;
 
 /** Implementation of deque based on linked list */
-public class LinkedListDeque<T> implements Deque<T>{
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     DLList<T> list = new DLList<>();
     public LinkedListDeque(){
         list = new DLList<>();
@@ -17,6 +17,12 @@ public class LinkedListDeque<T> implements Deque<T>{
     public void addLast(T item){
         list.addLast(item);
     }
+
+    @Override
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
     @Override
     public int size(){
         return list.size();
@@ -60,4 +66,26 @@ public class LinkedListDeque<T> implements Deque<T>{
             return returnItem;
         }
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Deque){
+            Deque<T> od = (Deque<T>) o;
+            if(od.size() != this.size()){
+                return false;
+            }
+            for(int i = 0; i < this.size(); i += 1){
+                if(this.get(i) != od.get(i)){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public T getRecursive(int index){
+        return list.getRecursive(index);
+    }
+
 }

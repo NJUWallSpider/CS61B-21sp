@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     private T[] items;
     private int size;
     private int front, back, original;
@@ -81,6 +81,12 @@ public class ArrayDeque<T> implements Deque<T>{
         items[Indexconvert(2, back)] = x;
         size += 1;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
     @Override
     public void printDeque() {
         if (isEmpty()) {
@@ -184,6 +190,22 @@ public class ArrayDeque<T> implements Deque<T>{
             currPos += 1;
             return returnItem;
         }
+    }
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Deque ){
+            Deque<T> oad = (Deque<T>) o;
+            if(oad.size() != this.size()){
+                return false;
+            }
+            for(int i = 0; i < this.size; i += 1){
+                if(this.get(i) != oad.get(i)){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
 }

@@ -97,5 +97,33 @@ class DLList<T> {
             return temp.item;
         }
     }
+
+    public T getRecursive(int index){
+        if(index >= size){
+            return null;
+        }
+        Node temp = sentinel;
+        if((double) index / size <= 0.5){
+            return helper_getRecur1(index, temp);
+        } else{
+            int search_times = size - index;
+            return helper_getRecur2(search_times, temp);
+        }
+    }
+
+    private T helper_getRecur1(int index, Node ptr) {
+        if (index < 0) {
+            return ptr.item;
+        } else {
+            return helper_getRecur1(index - 1, ptr.next);
+        }
+    }
+    private T helper_getRecur2(int index, Node ptr) {
+        if (index == 0) {
+            return ptr.item;
+        } else {
+            return helper_getRecur2(index - 1, ptr.prev);
+        }
+    }
 }
 
