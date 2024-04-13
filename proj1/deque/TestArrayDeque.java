@@ -90,4 +90,17 @@ public class TestArrayDeque {
         assertEquals(0, actual3);
     }
 
+    @Test
+    public void testIterable(){
+        ArrayDeque<Integer> lld5 = new ArrayDeque<>();
+        for(int i = 3; i <= 9; i+=1){
+            lld5.addLast(i);
+        }
+        int sum = 0;
+        for(int i : lld5){
+            sum += i;
+        }
+        assertEquals(sum, 42);
+    }
+
 }

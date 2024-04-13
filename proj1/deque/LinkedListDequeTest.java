@@ -146,4 +146,16 @@ public class LinkedListDequeTest {
         int item3 = lld1.get(0);
         Assert.assertEquals(0, item3);
     }
+    @Test
+    public void testIterable(){
+        LinkedListDeque<Integer> lld5 = new LinkedListDeque<>();
+        for(int i = 3; i <= 9; i+=1){
+            lld5.addLast(i);
+        }
+        int sum = 0;
+        for(int i : lld5){
+            sum += i;
+        }
+        assertEquals(sum, 42);
+    }
 }
