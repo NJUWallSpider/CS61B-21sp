@@ -36,7 +36,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
     @Override
     public T get(int index) {
-       return list.get(index);
+        return list.get(index);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     private class LinkedListDequeIterator implements Iterator<T> {
         private int currPos;
-        public LinkedListDequeIterator() {
+        LinkedListDequeIterator() {
             currPos = 0;
         }
         @Override
@@ -70,7 +70,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
                 return false;
             }
             for (int i = 0; i < this.size(); i += 1) {
-                if(!this.get(i).equals(od.get(i))){
+                if (!this.get(i).equals(od.get(i))) {
                     return false;
                 }
             }

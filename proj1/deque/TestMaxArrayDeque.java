@@ -1,27 +1,25 @@
 package deque;
 
-import afu.org.checkerframework.checker.igj.qual.I;
 import org.junit.Test;
 import org.junit.Assert;
-import org.junit.Assert.*;
 import java.util.Comparator;
 
 public class TestMaxArrayDeque {
-    public static class MaxIntegerComparator implements Comparator<Integer>{
+    public static class MaxIntegerComparator implements Comparator<Integer> {
         @Override
         public int compare(Integer o1, Integer o2) {
-            if(o1 > o2){
+            if (o1 > o2) {
                 return 1;
-            } else if(o1.equals(o2)){
+            } else if (o1.equals(o2)) {
                 return 0;
-            } else{
+            } else {
                 return -1;
             }
         }
     }
 
     @Test
-    public void testInteger(){
+    public void testInteger() {
         Comparator<Integer> nc = new TestMaxArrayDeque.MaxIntegerComparator();
         MaxArrayDeque<Integer> lld1 = new MaxArrayDeque<>(nc);
         lld1.addFirst(1);

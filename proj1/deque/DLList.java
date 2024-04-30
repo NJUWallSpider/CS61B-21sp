@@ -44,7 +44,7 @@ class DLList<T> {
         size += 1;
     }
     /** returns the number of items in the list */
-    public int size(){
+    public int size() {
         return size;
     }
     public void print() {
@@ -88,7 +88,7 @@ class DLList<T> {
             return temp.item;
         } else {
             int searchTimes = size - index;
-            for(int i = 0; i < searchTimes; i += 1) {
+            for (int i = 0; i < searchTimes; i += 1) {
                 temp = temp.prev;
             }
             return temp.item;
@@ -103,8 +103,8 @@ class DLList<T> {
         if ((double) index / size <= 0.5) {
             return helperGetRecur1(index, temp);
         } else {
-            int search_times = size - index;
-            return helperGetRecur2(search_times, temp);
+            int searchTimes = size - index;
+            return helperGetRecur2(searchTimes, temp);
         }
     }
 

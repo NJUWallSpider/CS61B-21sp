@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque< T > implements Deque< T >, Iterable< T > {
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
     private int front, back, original;
@@ -19,7 +19,7 @@ public class ArrayDeque< T > implements Deque< T >, Iterable< T > {
      * convert the relative distance from the origin
      * to the absolute index, mode 1 for front, 2 for back
      */
-    private int IndexConverter(int mode, int distance) {
+    private int indexConverter(int mode, int distance) {
         if (mode == 1) {
             int maxRoom = items.length - original - 1; // remaining room for front
             if (distance <= maxRoom) {
@@ -69,7 +69,7 @@ public class ArrayDeque< T > implements Deque< T >, Iterable< T > {
             resize(items.length * 2);
         }
         front += 1;
-        items[IndexConverter(1, front)] = x;
+        items[indexConverter(1, front)] = x;
         size += 1;
     }
     @Override
@@ -82,7 +82,7 @@ public class ArrayDeque< T > implements Deque< T >, Iterable< T > {
             resize(items.length * 2);
         }
         back += 1;
-        items[IndexConverter(2, back)] = x;
+        items[indexConverter(2, back)] = x;
         size += 1;
     }
     @Override
@@ -92,13 +92,13 @@ public class ArrayDeque< T > implements Deque< T >, Iterable< T > {
         } else {
             if (front > 0) {
                 for (int i = front; i > 0; i -= 1) {
-                    System.out.print(items[IndexConverter(1, i)]);
+                    System.out.print(items[indexConverter(1, i)]);
                     System.out.print(" ");
                 }
             }
             if (back > 0) {
                 for (int i = 1; i <= back; i += 1) {
-                    System.out.print(items[IndexConverter(2, i)]);
+                    System.out.print(items[indexConverter(2, i)]);
                     System.out.print(" ");
                 }
             }
@@ -116,12 +116,12 @@ public class ArrayDeque< T > implements Deque< T >, Iterable< T > {
             resize(items.length / 2);
         }
         if (front > 0) {
-            returned = items[IndexConverter(1, front)];
-            items[IndexConverter(1, front)] = null;
+            returned = items[indexConverter(1, front)];
+            items[indexConverter(1, front)] = null;
             front -= 1;
         } else {
-            returned = items[IndexConverter(2, 1)];
-            items[IndexConverter(2, 1)] = null;
+            returned = items[indexConverter(2, 1)];
+            items[indexConverter(2, 1)] = null;
             if (original != 0) {
                 original -= 1;
             } else {
@@ -143,12 +143,12 @@ public class ArrayDeque< T > implements Deque< T >, Iterable< T > {
             resize(items.length / 2);
         }
         if (back > 0) {
-            returned = items[IndexConverter(2, back)];
-            items[IndexConverter(2, back)] = null;
+            returned = items[indexConverter(2, back)];
+            items[indexConverter(2, back)] = null;
             back -= 1;
         } else {
-            returned = items[IndexConverter(1, 1)];
-            items[IndexConverter(1, 1)] = null;
+            returned = items[indexConverter(1, 1)];
+            items[indexConverter(1, 1)] = null;
             if (original != items.length - 1) {
                 original += 1;
             } else {
@@ -162,19 +162,19 @@ public class ArrayDeque< T > implements Deque< T >, Iterable< T > {
     @Override
     public T get(int index) {
         if (index + 1 <= front) {
-            return items[IndexConverter(1, front - index)];
+            return items[indexConverter(1, front - index)];
         } else {
-            return items[IndexConverter(2, index + 1 - front)];
+            return items[indexConverter(2, index + 1 - front)];
         }
     }
 
     @Override
-    public Iterator< T > iterator() {
+    public Iterator<T> iterator() {
         return new ArrayDequeIterator();
     }
-    private class ArrayDequeIterator implements Iterator< T > {
+    private class ArrayDequeIterator implements Iterator<T> {
         private int currPos;
-        public ArrayDequeIterator() {
+        ArrayDequeIterator() {
             currPos = 0;
         }
         @Override
@@ -191,7 +191,7 @@ public class ArrayDeque< T > implements Deque< T >, Iterable< T > {
     }
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Deque ) {
+        if (o instanceof Deque) {
             Deque<T> oad = (Deque<T>) o;
             if (oad.size() != this.size()) {
                 return false;

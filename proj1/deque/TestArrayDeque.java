@@ -1,10 +1,7 @@
 package deque;
 
 import org.junit.Test;
-import org.junit.Assert;
-import org.junit.Assert.*;
 
-import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -35,7 +32,7 @@ public class TestArrayDeque {
     @Test
     public void testRemove2() {
         ArrayDeque<Integer> lld2 = new ArrayDeque<>();
-        for (int i = 4; i >= 0; i -= 1){
+        for (int i = 4; i >= 0; i -= 1) {
             lld2.addFirst(i);
         }
         for (int i = 5; i <= 9; i += 1) {
@@ -54,7 +51,7 @@ public class TestArrayDeque {
     @Test
     public void testRemove3() {
         ArrayDeque<Integer> lld3 = new ArrayDeque<>();
-        for (int i = 2; i >= 0; i -=1 ) {
+        for (int i = 2; i >= 0; i -= 1 ) {
             lld3.addFirst(i);
         }
         for (int i = 3; i <= 9; i += 1) {
@@ -71,7 +68,7 @@ public class TestArrayDeque {
     @Test
     public void testRemove4() {
         ArrayDeque<Integer> lld4 = new ArrayDeque<>();
-        for (int i = 2; i >= 0; i -=1 ) {
+        for (int i = 2; i >= 0; i -= 1 ) {
             lld4.addFirst(i);
         }
         for (int i = 3; i <= 9; i += 1) {
@@ -90,7 +87,7 @@ public class TestArrayDeque {
     }
 
     @Test
-    public void testIterable(){
+    public void testIterable() {
         ArrayDeque<Integer> lld5 = new ArrayDeque<>();
         for (int i = 3; i <= 9; i += 1) {
             lld5.addLast(i);
@@ -102,7 +99,7 @@ public class TestArrayDeque {
         assertEquals(sum, 42);
     }
     @Test
-    public void testEqual(){
+    public void testEqual() {
         ArrayDeque<Integer> lld7 = new ArrayDeque<>();
         ArrayDeque<Integer> lld9 = new ArrayDeque<>();
         LinkedListDeque<Integer> lld10 = new LinkedListDeque<>();
