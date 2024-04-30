@@ -51,7 +51,7 @@ public class TestArrayDeque {
     @Test
     public void testRemove3() {
         ArrayDeque<Integer> lld3 = new ArrayDeque<>();
-        for (int i = 2; i >= 0; i -= 1 ) {
+        for (int i = 2; i >= 0; i -= 1) {
             lld3.addFirst(i);
         }
         for (int i = 3; i <= 9; i += 1) {
@@ -68,7 +68,7 @@ public class TestArrayDeque {
     @Test
     public void testRemove4() {
         ArrayDeque<Integer> lld4 = new ArrayDeque<>();
-        for (int i = 2; i >= 0; i -= 1 ) {
+        for (int i = 2; i >= 0; i -= 1) {
             lld4.addFirst(i);
         }
         for (int i = 3; i <= 9; i += 1) {
