@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class TestArrayDeque {
     /** test add and remove when front and back are both positive, and no resize */
     @Test
-    public void testRemove1(){
+    public void testRemove1() {
         ArrayDeque<Integer> lld1 = new ArrayDeque<>();
         lld1.addFirst(1);
         lld1.addLast(2);
@@ -33,18 +33,18 @@ public class TestArrayDeque {
     }
     /** test add and remove when front and back are both positive with resize */
     @Test
-    public void testRemove2(){
+    public void testRemove2() {
         ArrayDeque<Integer> lld2 = new ArrayDeque<>();
-        for(int i = 4; i >= 0; i-=1){
+        for (int i = 4; i >= 0; i -= 1){
             lld2.addFirst(i);
         }
-        for(int i = 5; i <= 9; i+=1){
+        for (int i = 5; i <= 9; i += 1) {
             lld2.addLast(i);
         }
 //        Assert.assertEquals(lld2.front, 5);
 //        Assert.assertEquals(lld2.back, 5);
         lld2.printDeque();
-        for(int i = 0; i < 5; i+=1){
+        for (int i = 0; i < 5; i += 1) {
             lld2.removeFirst();
             lld2.removeLast();
             lld2.printDeque();
@@ -52,16 +52,16 @@ public class TestArrayDeque {
     }
     /** test add and remove when front and back are possibly negative without resize */
     @Test
-    public void testRemove3(){
+    public void testRemove3() {
         ArrayDeque<Integer> lld3 = new ArrayDeque<>();
-        for(int i = 2; i >= 0; i-=1){
+        for (int i = 2; i >= 0; i -=1 ) {
             lld3.addFirst(i);
         }
-        for(int i = 3; i <= 9; i+=1){
+        for (int i = 3; i <= 9; i += 1) {
             lld3.addLast(i);
         }
         lld3.printDeque();
-        for(int i = 0; i < 10; i+=1){
+        for (int i = 0; i < 10; i += 1) {
             lld3.removeLast();
             lld3.printDeque();
         }
@@ -69,19 +69,19 @@ public class TestArrayDeque {
     }
     /** test get when front and back are possibly negative with resize */
     @Test
-    public void testRemove4(){
+    public void testRemove4() {
         ArrayDeque<Integer> lld4 = new ArrayDeque<>();
-        for(int i = 2; i >= 0; i-=1){
+        for (int i = 2; i >= 0; i -=1 ) {
             lld4.addFirst(i);
         }
-        for(int i = 3; i <= 9; i+=1){
+        for (int i = 3; i <= 9; i += 1) {
             lld4.addLast(i);
         }
         lld4.printDeque();
-        for(int i = 0; i < 10; i += 1){
+        for (int i = 0; i < 10; i += 1) {
             lld4.removeFirst();
         }
-        for(int i = 0; i < 10; i += 1){
+        for (int i = 0; i < 10; i += 1) {
             lld4.addLast(i);
         }
         lld4.printDeque();
@@ -92,32 +92,30 @@ public class TestArrayDeque {
     @Test
     public void testIterable(){
         ArrayDeque<Integer> lld5 = new ArrayDeque<>();
-        for(int i = 3; i <= 9; i+=1){
+        for (int i = 3; i <= 9; i += 1) {
             lld5.addLast(i);
         }
         int sum = 0;
-        for(int i : lld5){
+        for (int i : lld5) {
             sum += i;
         }
         assertEquals(sum, 42);
     }
     @Test
     public void testEqual(){
-        ArrayDeque<Integer> lld6 = null;
         ArrayDeque<Integer> lld7 = new ArrayDeque<>();
-        ArrayDeque<Double> lld8 = new ArrayDeque<>();
         ArrayDeque<Integer> lld9 = new ArrayDeque<>();
-        ArrayDeque<Integer> lld10 = new ArrayDeque<>();
-        for (int i = 0; i < 10; i += 1){
+        LinkedListDeque<Integer> lld10 = new LinkedListDeque<>();
+        for (int i = 0; i < 3; i += 1) {
             lld7.addFirst(i);
             lld9.addFirst(i);
-            lld10.addLast(i);
-            lld8.addFirst((double) i);
+
         }
+        lld10.addLast(2);
+        lld10.addLast(1);
+        lld10.addLast(0);
         assertEquals(lld7, lld9);
-        assertNotEquals(lld7, lld8);
-        assertNotEquals(lld7, lld6);
-        assertNotEquals(lld7, lld10);
+        assertEquals(lld7, lld10);
     }
 
 

@@ -8,40 +8,37 @@ class DLList<T> {
     private Node sentinel;
     /** creates an empty SLList */
     private class Node {
-        public T item;
-        public Node next;
-        public Node prev;
-        public Node(T i, Node p, Node n){
+        private T item;
+        private Node next;
+        private Node prev;
+        Node(T i, Node p, Node n) {
             item = i;
             prev = p;
             next = n;
         }
     }
-    public DLList(){
+    DLList() {
         sentinel = new Node(null, null, null);
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
         size = 0;
     }
     /** adds x to the front of list */
-    public void addFirst(T x){
+    public void addFirst(T x) {
         sentinel.next = new Node(x, sentinel, sentinel.next);
         sentinel.next.next.prev = sentinel.next;
-        if(size == 0){
-
-        }
         size += 1;
     }
     /** returns the first item of the list */
-    public T getFirst(){
+    public T getFirst() {
         return sentinel.next.item;
     }
     /** return the last item of the list */
-    public T getLast(){
+    public T getLast() {
         return sentinel.prev.item;
     }
     /** adds an item to the end of the list */
-    public void addLast(T x){
+    public void addLast(T x) {
         sentinel.prev = new Node(x, sentinel.prev, sentinel);
         sentinel.prev.prev.next = sentinel.prev;
         size += 1;
@@ -50,17 +47,17 @@ class DLList<T> {
     public int size(){
         return size;
     }
-    public void print(){
+    public void print() {
         Node temp = sentinel;
-        for(int i = 0; i < size - 1; i += 1){
+        for (int i = 0; i < size - 1; i += 1) {
             System.out.print(temp.next.item);
             System.out.print(" ");
             temp = temp.next;
         }
         System.out.println(temp.next.item);
     }
-    public T removeFirst(){
-        if(size == 0){
+    public T removeFirst() {
+        if (size == 0) {
             return null;
         }
         T returned = sentinel.next.item;
@@ -69,8 +66,8 @@ class DLList<T> {
         size -= 1;
         return returned;
     }
-    public T removeLast(){
-        if(size == 0){
+    public T removeLast() {
+        if (size == 0) {
             return null;
         }
         T returned = sentinel.prev.item;
@@ -80,49 +77,49 @@ class DLList<T> {
         return returned;
     }
     public T get(int index) {
-        if(index >= size){
+        if (index >= size) {
             return null;
         }
         Node temp = sentinel;
-        if((double) index / size <= 0.5){
-            for(int i = 0; i <= index; i+=1){
+        if ((double) index / size <= 0.5) {
+            for (int i = 0; i <= index; i += 1) {
                 temp = temp.next;
             }
             return temp.item;
-        } else{
-            int search_times = size - index;
-            for(int i = 0; i < search_times; i += 1){
+        } else {
+            int searchTimes = size - index;
+            for(int i = 0; i < searchTimes; i += 1) {
                 temp = temp.prev;
             }
             return temp.item;
         }
     }
 
-    public T getRecursive(int index){
-        if(index >= size){
+    public T getRecursive(int index) {
+        if (index >= size) {
             return null;
         }
         Node temp = sentinel;
-        if((double) index / size <= 0.5){
-            return helper_getRecur1(index, temp);
-        } else{
+        if ((double) index / size <= 0.5) {
+            return helperGetRecur1(index, temp);
+        } else {
             int search_times = size - index;
-            return helper_getRecur2(search_times, temp);
+            return helperGetRecur2(search_times, temp);
         }
     }
 
-    private T helper_getRecur1(int index, Node ptr) {
+    private T helperGetRecur1(int index, Node ptr) {
         if (index < 0) {
             return ptr.item;
         } else {
-            return helper_getRecur1(index - 1, ptr.next);
+            return helperGetRecur1(index - 1, ptr.next);
         }
     }
-    private T helper_getRecur2(int index, Node ptr) {
+    private T helperGetRecur2(int index, Node ptr) {
         if (index == 0) {
             return ptr.item;
         } else {
-            return helper_getRecur2(index - 1, ptr.prev);
+            return helperGetRecur2(index - 1, ptr.prev);
         }
     }
 }

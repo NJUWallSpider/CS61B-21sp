@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
+public class ArrayDeque< T > implements Deque< T >, Iterable< T > {
     private T[] items;
     private int size;
     private int front, back, original;
@@ -16,23 +16,24 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     }
 
     /**
-     * convert the relative distance from the origin to the absolute index, mode 1 for front, 2 for back
+     * convert the relative distance from the origin
+     * to the absolute index, mode 1 for front, 2 for back
      */
-    private int Indexconvert(int mode, int distance) {
+    private int IndexConverter(int mode, int distance) {
         if (mode == 1) {
-            int max_room = items.length - original - 1; // remaining room for front
-            if (distance <= max_room) {
+            int maxRoom = items.length - original - 1; // remaining room for front
+            if (distance <= maxRoom) {
                 return original + distance;
             } else {
-                int exceeded = distance - max_room;
+                int exceeded = distance - maxRoom;
                 return exceeded - 1;
             }
         } else if (mode == 2) {
-            int max_room = original;
-            if (distance <= max_room) {
+            int maxRoom = original;
+            if (distance <= maxRoom) {
                 return original - distance;
             } else {
-                int exceeded = distance - max_room;
+                int exceeded = distance - maxRoom;
                 return items.length - exceeded;
             }
         }
@@ -41,22 +42,25 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
 
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        int new_original = capacity / 2;
-        int max_room_front = items.length - original - 1;
-        int max_room_back = original;
-        if (front <= max_room_front && back <= max_room_back) {
-            System.arraycopy(items, original + 1, a, new_original + 1, front);
-            System.arraycopy(items, original - back, a, new_original - back, back);
-        } else if (front > max_room_front) {
-            System.arraycopy(items, original + 1, a, new_original + 1, max_room_front);
-            System.arraycopy(items, 0, a, new_original + 1 + max_room_front, front - max_room_front);
-            System.arraycopy(items, original - back, a, new_original - back, back);
+        int newOriginal = capacity / 2;
+        int maxRoomFront = items.length - original - 1;
+        int maxRoomBack = original;
+        if (front <= maxRoomFront && back <= maxRoomBack) {
+            System.arraycopy(items, original + 1, a, newOriginal + 1, front);
+            System.arraycopy(items, original - back, a, newOriginal - back, back);
+        } else if (front > maxRoomFront) {
+            System.arraycopy(items, original + 1,
+                    a, newOriginal + 1, maxRoomFront);
+            System.arraycopy(items, 0, a, newOriginal + 1 + maxRoomFront,
+                    front - maxRoomFront);
+            System.arraycopy(items, original - back, a, newOriginal - back, back);
         } else {
-            System.arraycopy(items, original + 1, a, new_original + 1, front);
-            System.arraycopy(items, 0, a, new_original - max_room_back, max_room_back);
-            System.arraycopy(items, items.length - back + max_room_back, a, new_original - back, back - max_room_back);
+            System.arraycopy(items, original + 1, a, newOriginal + 1, front);
+            System.arraycopy(items, 0, a, newOriginal - maxRoomBack, maxRoomBack);
+            System.arraycopy(items, items.length - back + maxRoomBack, a,
+                    newOriginal - back, back - maxRoomBack);
         }
-        original = new_original;
+        original = newOriginal;
         items = a;
     }
     @Override
@@ -65,7 +69,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
             resize(items.length * 2);
         }
         front += 1;
-        items[Indexconvert(1, front)] = x;
+        items[IndexConverter(1, front)] = x;
         size += 1;
     }
     @Override
@@ -78,15 +82,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
             resize(items.length * 2);
         }
         back += 1;
-        items[Indexconvert(2, back)] = x;
+        items[IndexConverter(2, back)] = x;
         size += 1;
     }
-
-    @Override
-    public boolean isEmpty() {
-        return size() == 0;
-    }
-
     @Override
     public void printDeque() {
         if (isEmpty()) {
@@ -94,13 +92,13 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
         } else {
             if (front > 0) {
                 for (int i = front; i > 0; i -= 1) {
-                    System.out.print(items[Indexconvert(1, i)]);
+                    System.out.print(items[IndexConverter(1, i)]);
                     System.out.print(" ");
                 }
             }
             if (back > 0) {
                 for (int i = 1; i <= back; i += 1) {
-                    System.out.print(items[Indexconvert(2, i)]);
+                    System.out.print(items[IndexConverter(2, i)]);
                     System.out.print(" ");
                 }
             }
@@ -118,12 +116,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
             resize(items.length / 2);
         }
         if (front > 0) {
-            returned = items[Indexconvert(1, front)];
-            items[Indexconvert(1, front)] = null;
+            returned = items[IndexConverter(1, front)];
+            items[IndexConverter(1, front)] = null;
             front -= 1;
         } else {
-            returned = items[Indexconvert(2, 1)];
-            items[Indexconvert(2, 1)] = null;
+            returned = items[IndexConverter(2, 1)];
+            items[IndexConverter(2, 1)] = null;
             if (original != 0) {
                 original -= 1;
             } else {
@@ -145,12 +143,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
             resize(items.length / 2);
         }
         if (back > 0) {
-            returned = items[Indexconvert(2, back)];
-            items[Indexconvert(2, back)] = null;
+            returned = items[IndexConverter(2, back)];
+            items[IndexConverter(2, back)] = null;
             back -= 1;
         } else {
-            returned = items[Indexconvert(1, 1)];
-            items[Indexconvert(1, 1)] = null;
+            returned = items[IndexConverter(1, 1)];
+            items[IndexConverter(1, 1)] = null;
             if (original != items.length - 1) {
                 original += 1;
             } else {
@@ -164,19 +162,19 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     @Override
     public T get(int index) {
         if (index + 1 <= front) {
-            return items[Indexconvert(1, front - index)];
+            return items[IndexConverter(1, front - index)];
         } else {
-            return items[Indexconvert(2, index + 1 - front)];
+            return items[IndexConverter(2, index + 1 - front)];
         }
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public Iterator< T > iterator() {
         return new ArrayDequeIterator();
     }
-    private class ArrayDequeIterator implements Iterator<T>{
+    private class ArrayDequeIterator implements Iterator< T > {
         private int currPos;
-        public ArrayDequeIterator(){
+        public ArrayDequeIterator() {
             currPos = 0;
         }
         @Override
@@ -192,14 +190,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
         }
     }
     @Override
-    public boolean equals(Object o){
-        if(o instanceof Deque ){
+    public boolean equals(Object o) {
+        if (o instanceof Deque ) {
             Deque<T> oad = (Deque<T>) o;
-            if(oad.size() != this.size()){
+            if (oad.size() != this.size()) {
                 return false;
             }
-            for(int i = 0; i < this.size; i += 1){
-                if(this.get(i) != oad.get(i)){
+            for (int i = 0; i < this.size; i += 1) {
+                if (!this.get(i).equals(oad.get(i))) {
                     return false;
                 }
             }
