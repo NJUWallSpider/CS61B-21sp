@@ -1,13 +1,11 @@
 package bstmap;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
 
     private Node root;             // root of BST
+    private V removeStore = null;
 
     private class Node {
         private K key;           // sorted by key
@@ -19,6 +17,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
             this.key = key;
             this.val = val;
             this.size = size;
+            this.left = null;
+            this.right = null;
         }
     }
 
@@ -110,27 +110,133 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
 
     @Override
     public V remove(K key) {
-        if (key == null) throw new IllegalArgumentException("calls delete() with a null key");
-        return remove(key, root);
+        if (key == null) throw new IllegalArgumentException("calls remove() with a null key");
+        root = remove(key, root);
+        return removeStore;
     }
 
-    private V remove(K key, Node x) {
-        if (x == null) return null;
-        int cmp = key.compareTo(x.key);
-        if      (cmp < 0) remove(key, x.left);
-        else if (cmp > 0) remove(key, x.right);
-        else {
+    private Node remove(K key, Node x) {
+        if (x == null) {
+            removeStore = null;
+            return null;
         }
-        x.size = size(x.left) + size(x.right) + 1;
+        int cmp = key.compareTo(x.key);
+        if      (cmp < 0) x.left = remove(key, x.left);
+        else if (cmp > 0) x.right = remove(key, x.right);
+        else {
+            removeStore = x.val;
+            if (x.right == null && x.left == null) {
+                x = null;
+            } else if (x.right == null && x.left != null) {
+                x = x.left;
+            } else if (x.right != null && x.left == null) {
+                x = x.right;
+            } else {
+                Node n = successorCopy(x);
+                x = successorRemove(x);
+                x.key = n.key;
+                x.val = n.val;
+            }
+        }
+        if (x != null) {
+            x.size = size(x.left) + size(x.right) + 1;
+        }
+        return x;
+    }
+
+    private Node max(Node x) {
+        if (x.right == null) {
+            return x;
+        } else {
+            return max(x.right);
+        }
+    }
+
+    public K successorCopy() {
+        return successorCopy(root).key;
+    }
+    private Node successorCopy(Node x) {
+        Node n = max(x.left);
+        return new Node(n.key, n.val, 1);
+    }
+
+    private Node successorRemove(Node x) {
+        Node n = successorCopy(x);
+        x = remove(n.key, x);
+        return x;
     }
 
     @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException("Unsupported operation");
+        if (key == null) throw new IllegalArgumentException("calls remove() with a null key");
+        root = remove2(key, value, root);
+        return removeStore;
     }
+
+    private Node remove2(K key, V value, Node x) {
+        if (x == null) {
+            removeStore = null;
+            return null;
+        }
+        int cmp = key.compareTo(x.key);
+        if      (cmp < 0) x = remove(key, x.left);
+        else if (cmp > 0) x = remove(key, x.right);
+        else if (x.val == value){
+            removeStore = x.val;
+            if (x.right == null && x.left == null) {
+                x = null;
+            } else if (x.right == null && x.left != null) {
+                x = x.left;
+            } else if (x.right != null && x.left == null) {
+                x = x.right;
+            } else {
+                Node n = successorCopy(x);
+                x = successorRemove(x);
+                x.key = n.key;
+                x.val = n.val;
+            }
+        } else {
+            removeStore = null;
+            return x;
+        }
+        if (x != null) {
+            x.size = size(x.left) + size(x.right) + 1;
+        }
+
+        return x;
+    }
+
 
     @Override
     public Iterator<K> iterator() {
-        throw new UnsupportedOperationException("Unsupported operation");
+        return new BSTMapIter();
+    }
+
+    private class BSTMapIter implements Iterator<K> {
+        private Stack<Node> stack = new Stack<>();
+
+        public BSTMapIter() {
+            pushLeft(root);
+        }
+
+        private void pushLeft(Node node) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+
+        @Override
+        public K next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            Node topNode = stack.pop();
+            pushLeft(topNode.right);
+            return topNode.key;
+        }
     }
 }
