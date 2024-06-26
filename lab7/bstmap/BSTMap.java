@@ -152,7 +152,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
         }
     }
 
-    public K successorCopy() {
+    private K successorCopy() {
         return successorCopy(root).key;
     }
     private Node successorCopy(Node x) {
@@ -237,6 +237,21 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
             Node topNode = stack.pop();
             pushLeft(topNode.right);
             return topNode.key;
+        }
+    }
+
+    public void printInOrder() {
+        printInOrder(root);
+    }
+
+    private void printInOrder(Node x) {
+        if (x != null) {
+            printInOrder(x.left);
+            System.out.print("Key: ");
+            System.out.print(x.key);
+            System.out.print(" Val: ");
+            System.out.println(x.val);
+            printInOrder(x.right);
         }
     }
 }
