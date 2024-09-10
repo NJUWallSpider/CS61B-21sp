@@ -7,6 +7,7 @@ I definitions.inc
 <<<
 > commit "version 1 of wug.txt"
 <<<
+= wug.txt wug.txt
 + wug.txt notwug.txt
 > add wug.txt
 <<<
