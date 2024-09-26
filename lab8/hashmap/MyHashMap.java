@@ -28,7 +28,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     private int bucketSize;
     private final double maxLoad;
     private int size;
-    protected Collection<Node>[] table;
+    private Collection<Node>[] table;
 
 
     /* Instance Variables */
