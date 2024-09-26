@@ -11,7 +11,6 @@ public class Main {
      *  <COMMAND> <OPERAND1> <OPERAND2> ... 
      */
     public static void main(String[] args) throws IOException {
-        try {
         if (args.length == 0) {
             System.out.println("Please enter a command.");
             System.exit(0);
@@ -54,9 +53,6 @@ public class Main {
                 Repository.rm(args[1]);
             default:
                 System.out.println("No command with that name exists.");
-        }
-        } catch (IOException e) {
-            e.printStackTrace(); // 处理 IOException 异常
         }
     }
 
