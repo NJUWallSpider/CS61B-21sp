@@ -25,9 +25,9 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         }
     }
     
-    protected int bucketSize;
-    protected double maxLoad;
-    protected int size;
+    private int bucketSize;
+    private final double maxLoad;
+    private int size;
     protected Collection<Node>[] table;
 
 
@@ -242,7 +242,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         return new hashMapIterator();
     }
 
-    public int hash2Index(K key) {
+    private int hash2Index(K key) {
         int hash = key.hashCode();
         return Math.floorMod(hash, bucketSize);
     }
